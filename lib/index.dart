@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:googledeepmind/animatedBox/animatedBoxPage.dart';
@@ -9,6 +10,7 @@ import 'package:googledeepmind/screens/Screen2.dart';
 import 'package:googledeepmind/screens/screen1.dart';
 import 'package:googledeepmind/screens/screen3.dart';
 import 'package:googledeepmind/screens/screen4.dart';
+import 'package:googledeepmind/screens/screen5.dart';
 import 'package:googledeepmind/scrollBloc/scroll_bar_offset_bloc.dart';
 
 class Home extends StatefulWidget {
@@ -18,10 +20,11 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
+class _HomeState extends State<Home> with TickerProviderStateMixin {
   late ScrollController scrollController;
   // late ScrollController scrollController2;
   late AnimationController animationController;
+  late AnimationController topBarAnimationController;
 
   bool visible = true;
   Color shadowColor = Color(0xff5f6269);
@@ -36,10 +39,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         duration: Duration(milliseconds: 200),
         reverseDuration: Duration(milliseconds: 200));
 
-    // animationController.addListener(() {
-    //   print(animationController.value);
-    // });
+    topBarAnimationController = AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: 300),
+        reverseDuration: Duration(milliseconds: 300));
 
+    // topBarAnimationController.addListener(() {
+    //   print(topBarAnimationController.value);
+    //   // print("we are animating ");
+    // });
+    topBarAnimationController.forward();
     scrollController.addListener(() {
       // if (scrollController.position.pixels > 375) {
       //   visible = false;
@@ -49,165 +58,189 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       //   target = 1.0;
       // }
       // setState(() {});
+      if (scrollController.position.pixels < 30) {
+        topBarAnimationController.forward();
+      } else {
+        if (scrollController.position.userScrollDirection ==
+                ScrollDirection.reverse &&
+            !topBarAnimationController.isAnimating) {
+          topBarAnimationController.reverse();
+          // print("reversing the direction");
+        } else if (scrollController.position.userScrollDirection ==
+                ScrollDirection.forward &&
+            !topBarAnimationController.isAnimating) {
+          topBarAnimationController.forward();
+        }
+      }
+
       context.read<ScrollBarOffsetBloc>().add(
           ScrollBarOffsetValueEvent(scrollController.position.pixels.toInt()));
-      print("pixes ${scrollController.position.pixels}");
+      // print("pixes ${scrollController.position.pixels}");
     });
 
     super.initState();
   }
 
+  void onHover(value) {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Stack(children: [
-        Container(
-          decoration: BoxDecoration(
-              // color: Colors.transparent,
-              gradient: RadialGradient(
-                  center: Alignment.topCenter,
-                  // focal: Alignment.center,
-                  radius: 1,
-                  focalRadius: 0.2,
-                  colors: [Color(0xff303342), Color(0xff070607)])),
-          child: NestedScrollView(
-            controller: scrollController,
-            floatHeaderSlivers: true,
-            headerSliverBuilder: (context, innerBoxIsScrolled) {
-              return [
-                BlocConsumer<ScrollBarOffsetBloc, ScrollBarOffsetState>(
-                  listener: (context, state) {
-                    if (state is ScrollBarOffsetValue) {
-                      if (state.offset < 30) {
-                        animationController.reverse();
-                      } else if (state.offset > 30) {
-                        animationController.forward();
-                      }
+        backgroundColor: Colors.transparent,
+        body: Stack(children: [
+          Container(
+              decoration: BoxDecoration(
+                  // color: Colors.transparent,
+                  gradient: RadialGradient(
+                      center: Alignment.topCenter,
+                      // focal: Alignment.center,
+                      radius: 1,
+                      focalRadius: 0.2,
+                      colors: [Color(0xff303342), Color(0xff070607)])),
+              child: SingleChildScrollView(
+                controller: scrollController,
+                child: Column(
+                  children: [
+                    // Screen1(),
+                    // Screen2(),
+                    // Screen3(),
+                    // Screen4(),
+                    // Container(
+                    //     color: Color(0xff070607),
+                    //     height: 600,
+                    //     width: MediaQuery.sizeOf(context).width,
+                    //     child: Center(
+                    //       child: AnimatedButton(
+                    //         string: "Read the technical report",
+                    //       ),
+                    //     )),
+                    // AnimatedBoxPage()
+                    Screen5()
+                  ],
+                ),
+              )),
+          BlocConsumer<ScrollBarOffsetBloc, ScrollBarOffsetState>(
+            listener: (context, state) {
+              // TODO: implement listener
+              if (state is ScrollBarOffsetValue) {
+                if (state.offset > 317) {
+                  visible = false;
+                } else {
+                  visible = true;
+                }
+              }
+            },
+            builder: (context, state) {
+              return Visibility(
+                  maintainAnimation: false,
+                  visible: !visible,
+                  child: Align(
+                      alignment: Alignment(0, -0.7),
+                      child: FloatingNavBarScreen1()));
+            },
+          ),
+          AnimatedBuilder(
+            animation: topBarAnimationController,
+            builder: (context, child) => Positioned(
+              top: -100 + topBarAnimationController.value * 100,
+              child: BlocConsumer<ScrollBarOffsetBloc, ScrollBarOffsetState>(
+                listener: (context, state) {
+                  if (state is ScrollBarOffsetValue) {
+                    if (state.offset < 30) {
+                      animationController.reverse();
+                    } else if (state.offset > 30) {
+                      animationController.forward();
                     }
-                  },
-                  buildWhen: (previous, current) {
-                    if (animationController.isAnimating) {
-                      return true;
-                    } else {
-                      return false;
-                    }
-                  },
-                  builder: (context, state) {
-                    return AnimatedBuilder(
-                      animation: animationController,
-                      builder: (context, child) => SliverAppBar(
-                        pinned: false,
-                        shadowColor: ColorTween(
+                  }
+                },
+                buildWhen: (previous, current) {
+                  if (animationController.isAnimating) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                },
+                builder: (context, state) {
+                  return AnimatedBuilder(
+                    animation: animationController,
+                    builder: (context, child) => MouseRegion(
+                      onEnter: (event) {
+                        if (scrollController.position.pixels < 30) {
+                          animationController.forward();
+                        }
+                      },
+                      onExit: (event) {
+                        if (scrollController.position.pixels < 30) {
+                          animationController.reverse();
+                        }
+                      },
+                      child: Container(
+                        height: 60,
+                        width: MediaQuery.sizeOf(context).width,
+                        color: ColorTween(
                                 begin: Colors.transparent,
-                                end: Color(0xff5f6269))
+                                end: Color(0xff070607))
                             .evaluate(animationController),
-                        forceElevated: true,
-                        toolbarHeight: 60,
-                        actions: [
-                          Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: HoverIcon())
-                        ],
-                        flexibleSpace: FlexibleSpaceBar(
-                          background: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Gap(20),
+                            HoverTextStatic(),
+                            Gap(30),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                HoverTextStatic(),
-                                Gap(30),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                HoverText(string: "About"),
+                                Gap(20),
+                                Stack(
                                   children: [
-                                    HoverText(string: "About"),
-                                    Gap(20),
-                                    Stack(
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                            "Technologies",
-                                            style: GoogleFonts.manrope(
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                            ),
-                                          ),
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "Technologies",
+                                        style: GoogleFonts.manrope(
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white,
+                                          fontSize: 16,
                                         ),
-                                        Align(
-                                          alignment: Alignment.bottomCenter,
-                                          child: Container(
-                                            height: 2,
-                                            width: 105,
-                                            color: Color(0xff1a73e8),
-                                          ),
-                                        )
-                                      ],
+                                      ),
                                     ),
-                                    Gap(20),
-                                    HoverText(string: "Impact"),
-                                    Gap(20),
-                                    HoverText(string: "Discover"),
+                                    Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: Container(
+                                        height: 2,
+                                        width: 105,
+                                        color: Color(0xff1a73e8),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Gap(20),
+                                HoverText(string: "Impact"),
+                                Gap(20),
+                                HoverText(string: "Discover"),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.sizeOf(context).width /
+                                          1.9,
+                                    ),
+                                    HoverIcon()
                                   ],
                                 )
                               ],
-                            ),
-                          ),
+                            )
+                          ],
                         ),
-                        surfaceTintColor: ColorTween(
-                                begin: Colors.transparent,
-                                end: Color(0xff070607))
-                            .evaluate(animationController),
-                        backgroundColor: ColorTween(
-                                begin: Colors.transparent,
-                                end: Color(0xff070607))
-                            .evaluate(animationController),
-                        floating: true,
-                        snap: true,
                       ),
-                    );
-                  },
-                ),
-                SliverToBoxAdapter(
-                  child: SingleChildScrollView(
-                    // controller: scrollController,
-                    child: Column(
-                      children: [Screen1(), Screen2(), Screen3(), Screen4()],
                     ),
-                  ),
-                )
-              ];
-            },
-            body: Container(
-              height: 100,
-              color: Color(0xff070607),
+                  );
+                },
+              ),
             ),
-          ),
-        ),
-        BlocConsumer<ScrollBarOffsetBloc, ScrollBarOffsetState>(
-          listener: (context, state) {
-            // TODO: implement listener
-            if (state is ScrollBarOffsetValue) {
-              if (state.offset > 375) {
-                visible = false;
-              } else {
-                visible = true;
-              }
-            }
-          },
-          builder: (context, state) {
-            return Visibility(
-                maintainAnimation: false,
-                visible: !visible,
-                child: Align(
-                    alignment: Alignment(0, -0.7),
-                    child: FloatingNavBarScreen1()));
-          },
-        ),
-      ]),
-    );
+          )
+        ]));
   }
 }
 

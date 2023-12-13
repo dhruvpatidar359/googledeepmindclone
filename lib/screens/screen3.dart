@@ -4,8 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:googledeepmind/scrollBloc/scroll_bar_offset_bloc.dart';
-import 'package:googledeepmind/scrollBloc/scroll_bar_offset_bloc.dart';
-import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class Screen3 extends StatefulWidget {
   const Screen3({super.key});
@@ -14,8 +12,15 @@ class Screen3 extends StatefulWidget {
   State<Screen3> createState() => _Screen3State();
 }
 
-class _Screen3State extends State<Screen3> {
+class _Screen3State extends State<Screen3> with SingleTickerProviderStateMixin {
   double target = 0.0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +28,28 @@ class _Screen3State extends State<Screen3> {
       listener: (context, state) {
         // TODO: implement listener
         if (state is ScrollBarOffsetValue) {
-          if (state.offset > 880) {
+          if (state.offset > 550) {
             target = 1.0;
           } else {
             target = 0.0;
+
+            // print("chaning the value to 0");
           }
           // if (state.offset < 1700) {
           //
           // }
         }
       },
+      buildWhen: (previous, current) {
+        if (current is ScrollBarOffsetValue) {
+          if (current.offset > 300 && current.offset < 1336) {
+            return true;
+          }
+        }
+        return false;
+      },
       builder: (context, state) {
+        // print("we are printing these values $target");
         return Container(
           height: MediaQuery.sizeOf(context).height,
           width: MediaQuery.sizeOf(context).width,
@@ -42,26 +58,25 @@ class _Screen3State extends State<Screen3> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Gap(100),
-              Text(
-                "The Gemini era",
-                style: GoogleFonts.manrope(
+              Text("The Gemini era",
+                  style: GoogleFonts.manrope(
                     fontSize: 70,
                     fontWeight: FontWeight.w500,
                     color: Colors.white,
-                    height: 1),
-              ).animate(
+                    height: 1,
+                  )).animate(
                 target: target,
                 effects: [
                   SlideEffect(
                       begin: Offset(0, 1),
                       end: Offset(0, 0),
-                      delay: 300.ms,
+                      delay: 200.ms,
                       curve: Curves.easeInOut,
                       duration: 600.ms),
                   FadeEffect(
                     begin: 0,
                     end: 1,
-                    delay: 300.ms,
+                    delay: 200.ms,
                     duration: 600.ms,
                     curve: Curves.easeInOut,
                   )
@@ -80,13 +95,13 @@ class _Screen3State extends State<Screen3> {
                   SlideEffect(
                       begin: Offset(0, 1),
                       end: Offset(0, 0),
-                      delay: 350.ms,
+                      delay: 200.ms,
                       curve: Curves.easeInOut,
                       duration: 600.ms),
                   FadeEffect(
                     begin: 0,
                     end: 1,
-                    delay: 350.ms,
+                    delay: 200.ms,
                     duration: 600.ms,
                     curve: Curves.easeInOut,
                   )
@@ -105,32 +120,34 @@ class _Screen3State extends State<Screen3> {
                   SlideEffect(
                       begin: Offset(0, 1),
                       end: Offset(0, 0),
-                      delay: 400.ms,
+                      delay: 200.ms,
                       curve: Curves.easeInOut,
                       duration: 600.ms),
                   FadeEffect(
                     begin: 0,
                     end: 1,
-                    delay: 400.ms,
+                    delay: 200.ms,
                     duration: 600.ms,
                     curve: Curves.easeInOut,
                   )
                 ],
               ),
               Gap(40),
-              AnimatedButton().animate(
+              AnimatedButton(
+                string: "Read the blog post",
+              ).animate(
                 target: target,
                 effects: [
                   SlideEffect(
                       begin: Offset(0, 1),
                       end: Offset(0, 0),
-                      delay: 450.ms,
+                      delay: 250.ms,
                       curve: Curves.easeInOut,
                       duration: 600.ms),
                   FadeEffect(
                     begin: 0,
                     end: 1,
-                    delay: 450.ms,
+                    delay: 250.ms,
                     duration: 600.ms,
                     curve: Curves.easeInOut,
                   )
@@ -146,7 +163,9 @@ class _Screen3State extends State<Screen3> {
 }
 
 class AnimatedButton extends StatefulWidget {
-  const AnimatedButton({Key? key}) : super(key: key);
+  AnimatedButton({Key? key, required this.string}) : super(key: key);
+
+  String string;
 
   @override
   State<AnimatedButton> createState() => _AnimatedButtonState();
@@ -188,7 +207,7 @@ class _AnimatedButtonState extends State<AnimatedButton>
             return Transform.scale(
               scale: 1 + 0.1 * animationController.value,
               child: Container(
-                width: 240,
+                width: widget.string.length * 12,
                 height: 50,
                 decoration: BoxDecoration(
                   color: isHovered ? Colors.white : Colors.black,
@@ -200,13 +219,13 @@ class _AnimatedButtonState extends State<AnimatedButton>
           },
         ),
         Container(
-          width: 240,
+          width: widget.string.length * 12,
           height: 50,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Read the blog post",
+                widget.string,
                 style: GoogleFonts.manrope(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,

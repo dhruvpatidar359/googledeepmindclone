@@ -57,8 +57,8 @@ class _Screen4State extends State<Screen4> {
         listener: (context, state) {
           // TODO: implement listener
           if (state is ScrollBarOffsetValue) {
-            if (state.offset > 1250) {
-              size = state.offset - 800;
+            if (state.offset > 1000) {
+              size = state.offset - 500;
 
               // _controller.play();
             } else {
@@ -66,8 +66,15 @@ class _Screen4State extends State<Screen4> {
             }
           }
         },
+        buildWhen: (previous, current) {
+          if (current is ScrollBarOffsetValue) {
+            if (current.offset > 965 && current.offset < 1500) {
+              return true;
+            }
+          }
+          return false;
+        },
         builder: (context, state) {
-          print("building");
           return Stack(alignment: Alignment.center, children: [
             Container(
               height: size,
@@ -118,34 +125,23 @@ class _Screen4State extends State<Screen4> {
                             children: [
                               Gap(20),
                               Container(
-                                width: MediaQuery.sizeOf(context).width / 1.55,
-                                height: MediaQuery.sizeOf(context).height / 1.3,
                                 decoration: BoxDecoration(
                                     color: Color(0xff1d1c1c),
                                     borderRadius: BorderRadius.circular(8)),
                                 child: Center(
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Container(
+                                    child: Card(
                                       color: Colors.transparent,
-                                      width: MediaQuery.sizeOf(context).width /
-                                          1.8,
-                                      height:
-                                          MediaQuery.sizeOf(context).height /
-                                              1.35,
-                                      child: FittedBox(
-                                        fit: BoxFit.cover,
-                                        child: SizedBox(
-                                            width:
-                                                _controller.value.size?.width ??
-                                                    0,
-                                            height: _controller
-                                                    .value.size?.height ??
-                                                0,
-                                            child: YoutubePlayer(
-                                              controller: _ytController,
-                                              aspectRatio: 16 / 9,
-                                            )),
+                                      child: AspectRatio(
+                                        aspectRatio: 16 / 9,
+                                        child: YoutubePlayer(
+                                          controller: _ytController,
+                                          aspectRatio: 16 / 9,
+                                          // You can also use this property to handle video playback errors
+
+                                          // Add more configurations and callbacks as needed
+                                        ),
                                       ),
                                     ),
                                   ),

@@ -69,7 +69,7 @@ class _AnimatedBoxTwoState extends State<AnimatedBoxTwo>
       }
     });
     _visiblityContoller.forward();
-    _blueGradientTimer = Timer.periodic(Duration(seconds: 6), (timer) {
+    _blueGradientTimer = Timer.periodic(Duration(seconds: 4), (timer) {
       _visiblityContoller.forward();
     });
 
@@ -102,7 +102,9 @@ class _AnimatedBoxTwoState extends State<AnimatedBoxTwo>
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black,
+      height: 180,
+      width: 180,
+      color: Colors.transparent,
       child: Center(
         child: Stack(alignment: Alignment.center, children: [
           Text(

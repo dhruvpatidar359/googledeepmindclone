@@ -36,8 +36,9 @@ class _Screen1State extends State<Screen1> {
         child: BlocConsumer<ScrollBarOffsetBloc, ScrollBarOffsetState>(
           listener: (context, state) {
             // TODO: implement listener
+
             if (state is ScrollBarOffsetValue) {
-              if (state.offset > 375) {
+              if (state.offset > 317) {
                 visible = false;
                 target = 0.5;
               } else {
@@ -46,7 +47,16 @@ class _Screen1State extends State<Screen1> {
               }
             }
           },
+          buildWhen: (previous, current) {
+            if (current is ScrollBarOffsetValue) {
+              if (current.offset < 508) {
+                return true;
+              }
+            }
+            return false;
+          },
           builder: (context, state) {
+            print("buildthis ");
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,

@@ -14,7 +14,7 @@ class _Screen2State extends State<Screen2> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.sizeOf(context).height,
+      height: MediaQuery.sizeOf(context).height / 2,
       width: MediaQuery.sizeOf(context).width,
       color: Color(0xff070607),
       child: Column(

@@ -28,14 +28,14 @@ class _AnimatedBoxState extends State<AnimatedBox>
 
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 400),
-      reverseDuration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 300),
+      reverseDuration: const Duration(milliseconds: 600),
     );
 
     _rotateController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 400),
-      reverseDuration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 300),
+      reverseDuration: const Duration(milliseconds: 600),
     );
 
     _rotateController.addStatusListener((status) {
@@ -69,7 +69,7 @@ class _AnimatedBoxState extends State<AnimatedBox>
       }
     });
     _visiblityContoller.forward();
-    _blueGradientTimer = Timer.periodic(Duration(seconds: 10), (timer) {
+    _blueGradientTimer = Timer.periodic(Duration(seconds: 8), (timer) {
       _visiblityContoller.forward();
     });
 
@@ -102,7 +102,9 @@ class _AnimatedBoxState extends State<AnimatedBox>
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black,
+      height: 140,
+      width: 140,
+      color: Colors.transparent,
       child: Center(
         child: Stack(alignment: Alignment.center, children: [
           Text(

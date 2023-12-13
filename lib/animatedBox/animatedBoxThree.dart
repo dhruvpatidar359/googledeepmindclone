@@ -102,7 +102,9 @@ class _AnimatedBoxThreeState extends State<AnimatedBoxThree>
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black,
+      color: Colors.transparent,
+      height: 230,
+      width: 230,
       child: Center(
         child: Stack(alignment: Alignment.center, children: [
           Text(
