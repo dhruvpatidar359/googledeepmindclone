@@ -46,12 +46,8 @@ dependencies:
   simple_gradient_text: ^1.3.0
   video_player: ^2.8.1
   youtube_player_iframe: ^4.0.4
-  pod_player: ^0.2.1
   chewie: ^1.7.4
   font_awesome_flutter: ^10.6.0
-  
-
-
   animated_switcher_plus: ^1.1.0
 
 dev_dependencies:
