@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:googledeepmind/index.dart';
 import 'package:googledeepmind/screens/Screen8Bloc/screen8Bloc.dart';
 import 'package:googledeepmind/scrollBloc/scroll_bar_offset_bloc.dart';

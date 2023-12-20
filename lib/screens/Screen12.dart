@@ -6,7 +6,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:googledeepmind/animatedBoxSmall/trainerBoxes.dart';
 import 'package:googledeepmind/scrollBloc/scroll_bar_offset_bloc.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';

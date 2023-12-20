@@ -1,15 +1,12 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:googledeepmind/animatedBox/animatedBoxPage.dart';
-import 'package:gap/gap.dart';
-import 'package:googledeepmind/animatedBoxSmall/trainerBoxes.dart';
 import 'package:googledeepmind/screens/Screen12.dart';
-
 import 'package:googledeepmind/screens/Screen2.dart';
+import 'package:googledeepmind/screens/Screen8Bloc/screen8.dart';
 import 'package:googledeepmind/screens/Screen8Bloc/screen8Companion.dart';
 import 'package:googledeepmind/screens/screen1.dart';
 import 'package:googledeepmind/screens/screen10.dart';
@@ -20,7 +17,6 @@ import 'package:googledeepmind/screens/screen4.dart';
 import 'package:googledeepmind/screens/screen5.dart';
 import 'package:googledeepmind/screens/screen6.dart';
 import 'package:googledeepmind/screens/screen7.dart';
-import 'package:googledeepmind/screens/Screen8Bloc/screen8.dart';
 import 'package:googledeepmind/screens/screen9.dart';
 import 'package:googledeepmind/scrollBloc/scroll_bar_offset_bloc.dart';
 

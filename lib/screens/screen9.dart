@@ -3,7 +3,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:googledeepmind/screens/screen3.dart';
 
 import '../scrollBloc/scroll_bar_offset_bloc.dart';
 

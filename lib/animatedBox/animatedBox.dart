@@ -1,8 +1,9 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
-import 'dart:async';
-import 'dart:math';
 
 class AnimatedBox extends StatefulWidget {
   const AnimatedBox({Key? key}) : super(key: key);

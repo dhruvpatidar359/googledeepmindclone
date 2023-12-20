@@ -1,12 +1,8 @@
 import 'package:chewie/chewie.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:googledeepmind/screens/Screen8Bloc/screen8Bloc.dart';
-import 'package:pod_player/pod_player.dart';
 import 'package:video_player/video_player.dart';
-import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 import '../../scrollBloc/scroll_bar_offset_bloc.dart';
 
