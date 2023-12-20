@@ -18,6 +18,9 @@ class AnimatedBoxPage extends StatefulWidget {
 
 class _AnimatedBoxPageState extends State<AnimatedBoxPage> {
   double target = 0.0;
+  bool flag = false;
+  double start = 0;
+  double end = 1;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,16 +36,33 @@ class _AnimatedBoxPageState extends State<AnimatedBoxPage> {
             listener: (context, state) {
               // TODO: implement listener
               if (state is ScrollBarOffsetValue) {
-                if (state.offset > 2154) {
+                if (state.offset > 2050 &&
+                    state.offset < 2800 &&
+                    flag == false) {
                   target = 1.0;
-                } else {
+                } else if (state.offset < 2800 &&
+                    flag == true &&
+                    state.offset > 2050) {
                   target = 0.0;
+                } else if (state.offset > 2800) {
+                  target = 1.0;
+                  flag = true;
+                  start = 1.0;
+                  end = 0.0;
+                } else if (state.offset < 2800) {
+                  target = 0.0;
+                  start = 0.0;
+                  end = 1.0;
+                  flag = false;
                 }
+                // if (state.offset < 1700) {
+                //
+                // }
               }
             },
             buildWhen: (previous, current) {
               if (current is ScrollBarOffsetValue) {
-                if (current.offset > 2000) {
+                if (current.offset > 2000 && current.offset < 2854) {
                   return true;
                 }
               }
@@ -60,18 +80,15 @@ class _AnimatedBoxPageState extends State<AnimatedBoxPage> {
                 target: target,
                 effects: [
                   SlideEffect(
-                      begin: Offset(0, 1),
-                      end: Offset(0, 0),
-                      delay: 300.ms,
+                      begin: Offset(0, 0),
+                      end: Offset(0, -0.8),
                       curve: Curves.easeInOut,
-                      duration: 600.ms),
+                      duration: 1000.ms),
                   FadeEffect(
-                    begin: 0,
-                    end: 1,
-                    delay: 300.ms,
-                    duration: 600.ms,
-                    curve: Curves.easeInOut,
-                  )
+                      begin: start,
+                      end: end,
+                      curve: Curves.easeInOut,
+                      duration: 1000.ms)
                 ],
               );
             },

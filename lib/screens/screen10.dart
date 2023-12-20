@@ -9,14 +9,14 @@ import 'package:googledeepmind/scrollBloc/scroll_bar_offset_bloc.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
-class Screen4 extends StatefulWidget {
-  const Screen4({super.key});
+class Screen10 extends StatefulWidget {
+  const Screen10({super.key});
 
   @override
-  State<Screen4> createState() => _Screen4State();
+  State<Screen10> createState() => _Screen10State();
 }
 
-class _Screen4State extends State<Screen4> {
+class _Screen10State extends State<Screen10> {
   double size = 100;
 
   late VideoPlayerController _controller;
@@ -25,7 +25,7 @@ class _Screen4State extends State<Screen4> {
   void initState() {
     super.initState();
     _controller =
-        VideoPlayerController.asset('assets/videos/GeminiGoogleDeepMind.mp4')
+        VideoPlayerController.asset('assets/videos/GeminiGoogleDeepMind2.mp4')
           ..initialize().then((_) {
             _controller.setVolume(0);
             _controller.setLooping(true);
@@ -57,8 +57,8 @@ class _Screen4State extends State<Screen4> {
         listener: (context, state) {
           // TODO: implement listener
           if (state is ScrollBarOffsetValue) {
-            if (state.offset > 1000) {
-              size = state.offset - 500;
+            if (state.offset > 7860) {
+              size = state.offset - 7400;
 
               // _controller.play();
             } else {
@@ -68,7 +68,7 @@ class _Screen4State extends State<Screen4> {
         },
         buildWhen: (previous, current) {
           if (current is ScrollBarOffsetValue) {
-            if (current.offset > 965 && current.offset < 1500) {
+            if (current.offset > 7873 && current.offset < 8448) {
               return true;
             }
           }
@@ -108,7 +108,7 @@ class _Screen4State extends State<Screen4> {
                   ),
                 );
 
-                _ytController.loadVideoById(videoId: "jV1vkHv4zq8");
+                _ytController.loadVideoById(videoId: "gi6J_WjjNhE");
 
                 showDialog(
                   context: context,
@@ -125,6 +125,7 @@ class _Screen4State extends State<Screen4> {
                             children: [
                               Gap(20),
                               Container(
+                                width: MediaQuery.sizeOf(context).width / 1.3,
                                 decoration: BoxDecoration(
                                     color: Color(0xff1d1c1c),
                                     borderRadius: BorderRadius.circular(8)),
@@ -138,9 +139,6 @@ class _Screen4State extends State<Screen4> {
                                         child: YoutubePlayer(
                                           controller: _ytController,
                                           aspectRatio: 16 / 9,
-                                          // You can also use this property to handle video playback errors
-
-                                          // Add more configurations and callbacks as needed
                                         ),
                                       ),
                                     ),

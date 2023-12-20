@@ -14,6 +14,9 @@ class Screen3 extends StatefulWidget {
 
 class _Screen3State extends State<Screen3> with SingleTickerProviderStateMixin {
   double target = 0.0;
+  bool flag = false;
+  double start = 0;
+  double end = 1;
 
   @override
   void initState() {
@@ -27,13 +30,24 @@ class _Screen3State extends State<Screen3> with SingleTickerProviderStateMixin {
     return BlocConsumer<ScrollBarOffsetBloc, ScrollBarOffsetState>(
       listener: (context, state) {
         // TODO: implement listener
-        if (state is ScrollBarOffsetValue) {
-          if (state.offset > 550) {
-            target = 1.0;
-          } else {
-            target = 0.0;
 
-            // print("chaning the value to 0");
+        if (state is ScrollBarOffsetValue) {
+          if (state.offset > 300 && state.offset < 1282 && flag == false) {
+            target = 1.0;
+          } else if (state.offset < 1282 &&
+              flag == true &&
+              state.offset > 300) {
+            target = 0.0;
+          } else if (state.offset > 1282) {
+            target = 1.0;
+            flag = true;
+            start = 1.0;
+            end = 0.0;
+          } else if (state.offset < 300) {
+            target = 0.0;
+            start = 0.0;
+            end = 1.0;
+            flag = false;
           }
           // if (state.offset < 1700) {
           //
@@ -42,119 +56,93 @@ class _Screen3State extends State<Screen3> with SingleTickerProviderStateMixin {
       },
       buildWhen: (previous, current) {
         if (current is ScrollBarOffsetValue) {
-          if (current.offset > 300 && current.offset < 1336) {
+          if (current.offset > 200 && current.offset < 1336) {
             return true;
           }
         }
-        return false;
+        return true;
       },
       builder: (context, state) {
+        // print("target $start , $end , $target , $flag");
         // print("we are printing these values $target");
         return Container(
           height: MediaQuery.sizeOf(context).height,
           width: MediaQuery.sizeOf(context).width,
           color: const Color(0xff070607),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Gap(100),
-              Text("The Gemini era",
-                  style: GoogleFonts.manrope(
-                    fontSize: 70,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white,
-                    height: 1,
-                  )).animate(
-                target: target,
-                effects: [
-                  SlideEffect(
-                      begin: Offset(0, 1),
-                      end: Offset(0, 0),
-                      delay: 200.ms,
-                      curve: Curves.easeInOut,
-                      duration: 600.ms),
-                  FadeEffect(
-                    begin: 0,
-                    end: 1,
-                    delay: 200.ms,
-                    duration: 600.ms,
-                    curve: Curves.easeInOut,
-                  )
-                ],
-              ),
-              Gap(20),
-              Text("Gemini represents a significant leap forward in how AI can",
+          child: Center(
+            child: Container(
+                height: 500,
+                width: 1000,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Gap(100),
+                    Text("The Gemini era",
+                        style: GoogleFonts.manrope(
+                          fontSize: 70,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                          height: 1.2,
+                        ))
+
+                    // TextButton(
+                    //     onPressed: () {
+                    //       animationController.forward();
+                    //     },
+                    //     child: Text("foward")),
+                    // TextButton(
+                    //     onPressed: () {
+                    //       animationController.reverse();
+                    //     },
+                    //     child: Text("revserse")),
+                    // TextButton(
+                    //     onPressed: () {
+                    //       animationController.forward(from: 0);
+                    //     },
+                    //     child: Text("reset")),
+                    // TextButton(
+                    //     onPressed: () {
+                    //       animationController.reverse(from: 1);
+                    //     },
+                    //     child: Text("upreset"))
+                    ,
+                    Gap(20),
+                    Text(
+                        "Gemini represents a significant leap forward in how AI can",
+                        style: GoogleFonts.manrope(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xff8e9ba8),
+                            height: 1.2)),
+                    Text(
+                      "help improve our daily lives.",
                       style: GoogleFonts.manrope(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
                           color: Color(0xff8e9ba8),
-                          height: 1))
-                  .animate(
-                target: target,
-                effects: [
-                  SlideEffect(
-                      begin: Offset(0, 1),
-                      end: Offset(0, 0),
-                      delay: 200.ms,
-                      curve: Curves.easeInOut,
-                      duration: 600.ms),
-                  FadeEffect(
-                    begin: 0,
-                    end: 1,
-                    delay: 200.ms,
-                    duration: 600.ms,
+                          height: 1.2),
+                    ),
+                    Gap(30),
+                    AnimatedButton(
+                      string: "Read the blog post",
+                    ),
+                    Gap(100),
+                  ],
+                )).animate(
+              target: target,
+              effects: [
+                SlideEffect(
+                    begin: Offset(0, 0),
+                    end: Offset(0, -0.2),
                     curve: Curves.easeInOut,
-                  )
-                ],
-              ),
-              Text(
-                "help improve our daily lives.",
-                style: GoogleFonts.manrope(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xff8e9ba8),
-                    height: 1),
-              ).animate(
-                target: target,
-                effects: [
-                  SlideEffect(
-                      begin: Offset(0, 1),
-                      end: Offset(0, 0),
-                      delay: 200.ms,
-                      curve: Curves.easeInOut,
-                      duration: 600.ms),
-                  FadeEffect(
-                    begin: 0,
-                    end: 1,
-                    delay: 200.ms,
-                    duration: 600.ms,
+                    duration: 1000.ms),
+                FadeEffect(
+                    begin: start,
+                    end: end,
                     curve: Curves.easeInOut,
-                  )
-                ],
-              ),
-              Gap(40),
-              AnimatedButton(
-                string: "Read the blog post",
-              ).animate(
-                target: target,
-                effects: [
-                  SlideEffect(
-                      begin: Offset(0, 1),
-                      end: Offset(0, 0),
-                      delay: 250.ms,
-                      curve: Curves.easeInOut,
-                      duration: 600.ms),
-                  FadeEffect(
-                    begin: 0,
-                    end: 1,
-                    delay: 250.ms,
-                    duration: 600.ms,
-                    curve: Curves.easeInOut,
-                  )
-                ],
-              ),
-              Gap(100),
-            ],
+                    duration: 1000.ms)
+              ],
+            ),
           ),
         );
       },

@@ -6,12 +6,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:googledeepmind/animatedBox/animatedBoxPage.dart';
 import 'package:gap/gap.dart';
+import 'package:googledeepmind/animatedBoxSmall/trainerBoxes.dart';
+import 'package:googledeepmind/screens/Screen12.dart';
+
 import 'package:googledeepmind/screens/Screen2.dart';
+import 'package:googledeepmind/screens/Screen8Bloc/screen8Companion.dart';
 import 'package:googledeepmind/screens/screen1.dart';
+import 'package:googledeepmind/screens/screen10.dart';
+import 'package:googledeepmind/screens/screen11.dart';
+import 'package:googledeepmind/screens/screen13.dart';
 import 'package:googledeepmind/screens/screen3.dart';
 import 'package:googledeepmind/screens/screen4.dart';
 import 'package:googledeepmind/screens/screen5.dart';
+import 'package:googledeepmind/screens/screen6.dart';
+import 'package:googledeepmind/screens/screen7.dart';
+import 'package:googledeepmind/screens/Screen8Bloc/screen8.dart';
+import 'package:googledeepmind/screens/screen9.dart';
 import 'package:googledeepmind/scrollBloc/scroll_bar_offset_bloc.dart';
+
+import 'animatedBoxSmall/trainercontainers.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -29,6 +42,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   bool visible = true;
   Color shadowColor = Color(0xff5f6269);
   double target = 1.0;
+  double scrollValue = 0.0;
 
   @override
   void initState() {
@@ -75,7 +89,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
       context.read<ScrollBarOffsetBloc>().add(
           ScrollBarOffsetValueEvent(scrollController.position.pixels.toInt()));
-      // print("pixes ${scrollController.position.pixels}");
+      print("pixes ${scrollController.position.pixels}");
     });
 
     super.initState();
@@ -114,8 +128,38 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                     //         string: "Read the technical report",
                     //       ),
                     //     )),
-                    // AnimatedBoxPage()
-                    Screen5()
+                    // AnimatedBoxPage(),
+                    // Screen5(),
+                    // Screen6(),
+                    // Screen7(),
+                    // Screen8VideoPlayer(),
+                    // Screen8(),
+                    // TrainerContainersText(),
+                    // Container(
+                    //   color: Color(0xff070607),
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.all(100.0),
+                    //     child: Column(
+                    //       children: [
+                    //         TrainerBox1(),
+                    //         TrainerBox2(),
+                    //         TrainerBox3()
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    // Screen9(),
+                    // Screen10(),
+                    // Screen11(),
+                    // Container(
+                    //   height: 100,
+                    //   width: MediaQuery.sizeOf(context).width,
+                    //   color: Color(0xff070607),
+                    // ),
+                    // Screen12Text(),
+                    // Screen12(),
+                    // Screen12Companion()
+                    Screen13(),
                   ],
                 ),
               )),
