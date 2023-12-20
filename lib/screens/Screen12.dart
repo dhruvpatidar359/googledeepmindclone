@@ -38,7 +38,7 @@ class _Screen12State extends State<Screen12> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: List.generate(
                     3,
                     (index) => TrainerBoxesTwo(
@@ -68,7 +68,7 @@ class Screen12CompanionState extends State<Screen12Companion> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: List.generate(
                     3,
                     (index) => TrainerBoxesTwo(

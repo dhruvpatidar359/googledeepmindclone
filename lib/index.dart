@@ -89,7 +89,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
       context.read<ScrollBarOffsetBloc>().add(
           ScrollBarOffsetValueEvent(scrollController.position.pixels.toInt()));
-      print("pixes ${scrollController.position.pixels}");
+      // print("pixes ${scrollController.position.pixels}");
     });
 
     super.initState();
@@ -115,51 +115,58 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                 controller: scrollController,
                 child: Column(
                   children: [
-                    // Screen1(),
-                    // Screen2(),
-                    // Screen3(),
-                    // Screen4(),
-                    // Container(
-                    //     color: Color(0xff070607),
-                    //     height: 600,
-                    //     width: MediaQuery.sizeOf(context).width,
-                    //     child: Center(
-                    //       child: AnimatedButton(
-                    //         string: "Read the technical report",
-                    //       ),
-                    //     )),
-                    // AnimatedBoxPage(),
-                    // Screen5(),
-                    // Screen6(),
-                    // Screen7(),
-                    // Screen8VideoPlayer(),
-                    // Screen8(),
-                    // TrainerContainersText(),
-                    // Container(
-                    //   color: Color(0xff070607),
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.all(100.0),
-                    //     child: Column(
-                    //       children: [
-                    //         TrainerBox1(),
-                    //         TrainerBox2(),
-                    //         TrainerBox3()
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    // Screen9(),
-                    // Screen10(),
-                    // Screen11(),
-                    // Container(
-                    //   height: 100,
-                    //   width: MediaQuery.sizeOf(context).width,
-                    //   color: Color(0xff070607),
-                    // ),
-                    // Screen12Text(),
-                    // Screen12(),
-                    // Screen12Companion()
-                    Screen13(),
+                    Screen1(),
+                    Screen2(),
+                    Screen3(),
+                    Screen4(),
+                    Container(
+                        color: Color(0xff070607),
+                        height: 600,
+                        width: MediaQuery.sizeOf(context).width,
+                        child: Center(
+                          child: AnimatedButton(
+                            string: "Read the technical report",
+                          ),
+                        )),
+                    AnimatedBoxPage(),
+                    Screen5(),
+                    Screen6(),
+                    Screen7(),
+                    Screen8VideoPlayer(),
+                    Screen8(),
+                    TrainerContainersText(),
+                    Container(
+                      color: Color(0xff070607),
+                      child: Padding(
+                        padding: const EdgeInsets.all(100.0),
+                        child: Column(
+                          children: [
+                            TrainerBox1(),
+                            TrainerBox2(),
+                            TrainerBox3()
+                          ],
+                        ),
+                      ),
+                    ),
+                    Screen9(),
+                    Screen10(),
+                    Screen11(),
+                    Container(
+                      height: 100,
+                      width: MediaQuery.sizeOf(context).width,
+                      color: Color(0xff070607),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(40.0, 0, 40, 0),
+                      child: Column(
+                        children: [
+                          Screen12Text(),
+                          Screen12(),
+                          Screen12Companion(),
+                          Screen13(),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               )),
